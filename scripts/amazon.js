@@ -76,7 +76,7 @@ function addToCart(button){
     })
 }
 
-function addPopUp(button, id=''){
+function addPopUp(button, id){
     let addedPopUp = button.parentElement.querySelector('.added-to-cart').style
     if (addedPopUp.opacity) clearTimeout(id)
     id = setTimeout(()=>addedPopUp.opacity = '0', 2000)
