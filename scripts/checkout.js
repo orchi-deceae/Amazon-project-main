@@ -96,5 +96,6 @@ document.querySelectorAll('.delete-quantity-link').forEach((link)=>{
     link.addEventListener('click', ()=>{
         const productId = link.dataset.productId
         removeCart(productId)
+        link.parentElement.parentElement.parentElement.parentElement.remove()
     });
 });
