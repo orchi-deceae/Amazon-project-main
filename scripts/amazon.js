@@ -1,4 +1,5 @@
 
+let allproducts = [];
 document.querySelector('.products-grid').innerHTML = ''
 products.forEach((product) => {
     const productsHTML = `
@@ -14,14 +15,14 @@ products.forEach((product) => {
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
-              src="images/ratings/rating-${product.rating.stars*10}.png">
+              src="images/ratings/rating-${product.rating.stars * 10}.png">
             <div class="product-rating-count link-primary">
               ${product.rating.count}
             </div>
           </div>
 
           <div class="product-price">
-            $${(product.priceCents/100).toFixed(2)}
+            $${(product.priceCents / 100).toFixed(2)}
           </div>
 
           <div class="product-quantity-container">
@@ -51,32 +52,47 @@ products.forEach((product) => {
             Add to Cart
           </button>
         </div>
-    `
+        `
 
-    document.querySelector('.products-grid-js-').innerHTML += productsHTML
-});
+        allproducts += productsHTML
+    });
+document.querySelector('.products-grid-js-').innerHTML = allproducts
+
+function addToCart(button){
+    let count = button.parentElement.querySelector('.product-quantity-container select')
+    let mathchingItem;
+    const productId = button.dataset.productId
+    
+    // This checks have we ever done this before
+    cart.forEach((item) => {
+      if (item.productId === productId) mathchingItem = item
+    });
+
+    if (mathchingItem) mathchingItem.quantity+= Number(count.value)
+    else cart.push({
+      productId, quantity: Number(count.value)
+    })
+}
+
+function addPopUp(button, id=''){
+    let addedPopUp = button.parentElement.querySelector('.added-to-cart').style
+    if (addedPopUp.opacity) clearTimeout(id)
+    id = setTimeout(()=>addedPopUp.opacity = '0', 2000)
+    addedPopUp.opacity = 1;
+    return id
+}
 
 document.querySelectorAll('.js-add-to-cart-').forEach((button) => {
+    let id;
     button.addEventListener('click', () => {
-      const productId = button.dataset.productId
-      let mathchingItem;
+        addToCart(button)
 
-      cart.forEach((item) => {
-        if (item.productId === productId){
-          mathchingItem = item
-        }
-      });
-      if (mathchingItem) mathchingItem.quantity+= 1
-      else cart.push({
-        productId,
-        quantity: 1
-      })
-
-      let cartQuantity = 0;
-
-      cart.forEach((item) => {
-        cartQuantity += item.quantity
-      });
-      document.querySelector('.cart-quantity-js-').innerHTML = cartQuantity
+        id = addPopUp(button, id)
+        
+        let cartQuantity = 0;
+        cart.forEach((item) => {
+            cartQuantity += item.quantity
+        });
+        document.querySelector('.cart-quantity-js-').innerHTML = cartQuantity
     });
 });
