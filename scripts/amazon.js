@@ -1,5 +1,5 @@
 
-import { cart } from "../data/cart.js";
+import { cart, addToCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 
 let allproducts = [];
@@ -59,22 +59,6 @@ products.forEach((product) => {
         allproducts += productsHTML
     });
 document.querySelector('.products-grid-js-').innerHTML = allproducts
-
-function addToCart(button){
-    let count = button.parentElement.querySelector('.product-quantity-container select')
-    let mathchingItem;
-    const productId = button.dataset.productId
-    
-    // This checks have we ever done this before
-    cart.forEach((item) => {
-      if (item.productId === productId) mathchingItem = item
-    });
-
-    if (mathchingItem) mathchingItem.quantity+= Number(count.value)
-    else cart.push({
-      productId, quantity: Number(count.value)
-    })
-}
 
 function addPopUp(button, id){
     let addedPopUp = button.parentElement.querySelector('.added-to-cart').style
