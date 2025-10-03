@@ -1,4 +1,4 @@
-import { cart, removeCart } from "../data/cart.js";
+import { calcCartQuantity, cart, removeCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
@@ -96,14 +96,13 @@ document.querySelectorAll('.delete-quantity-link').forEach((link)=>{
     link.addEventListener('click', ()=>{
         const productId = link.dataset.productId
         removeCart(productId)
-        calcCheckoutItems()
+        updateCart()
         link.parentElement.parentElement.parentElement.parentElement.remove()
     });
 });
 
 // Top middle
-function calcCheckoutItems(total=0){
-    cart.forEach((item)=>{total += item.quantity});
-    document.querySelector('.js-return-to-home-link-').innerHTML = `${total} items`
+function updateCart(){
+    document.querySelector('.js-return-to-home-link-').innerHTML = `${calcCartQuantity()} items`
 }
-calcCheckoutItems()
+updateCart()

@@ -1,5 +1,5 @@
 
-import { cart, addToCart } from "../data/cart.js";
+import { cart, addToCart, calcCartQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
@@ -71,9 +71,7 @@ function addPopUp(button, id){
 }
 
 function updateCart(){
-    let cartQuantity = 0;
-    cart.forEach((item) => cartQuantity += item.quantity);
-    document.querySelector('.cart-quantity-js-').innerHTML = cartQuantity
+    document.querySelector('.cart-quantity-js-').innerHTML = calcCartQuantity()
 }
 
 document.querySelectorAll('.js-add-to-cart-').forEach((button) => {

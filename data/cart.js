@@ -30,3 +30,8 @@ export function removeCart(productId){
     cart = newcart
     saveToStorage()
 }
+
+export function calcCartQuantity(total=0){
+    cart.forEach((item)=>{total += item.quantity});
+    return total
+}
