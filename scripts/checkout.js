@@ -111,6 +111,7 @@ updateCart()
 document.querySelectorAll('.js-update-quantity-link-').forEach((updateBtn)=>{
     updateBtn.addEventListener('click', ()=>{
         const id = updateBtn.dataset.productId
+        updateBtn.innerHTML += `<input class="quantity-input-"><span class="save-quantity-link- link-primary">Save</span>`
         console.log(id)
     });
 });
