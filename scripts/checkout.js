@@ -91,7 +91,7 @@ cart.forEach((cartItem, i) => {
 });
 document.querySelector('.order-summary').innerHTML = cartSummeryHTML
 
-
+// delete link on items
 document.querySelectorAll('.delete-quantity-link').forEach((link)=>{
     link.addEventListener('click', ()=>{
         const productId = link.dataset.productId
@@ -99,3 +99,10 @@ document.querySelectorAll('.delete-quantity-link').forEach((link)=>{
         link.parentElement.parentElement.parentElement.parentElement.remove()
     });
 });
+
+// Top middle
+function checkoutItems(total=0){
+    cart.forEach((i)=>{total += i.quantity});
+    document.querySelector('.js-return-to-home-link-').innerHTML = `${total} items`
+}
+checkoutItems()
