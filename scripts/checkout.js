@@ -96,13 +96,14 @@ document.querySelectorAll('.delete-quantity-link').forEach((link)=>{
     link.addEventListener('click', ()=>{
         const productId = link.dataset.productId
         removeCart(productId)
+        calcCheckoutItems()
         link.parentElement.parentElement.parentElement.parentElement.remove()
     });
 });
 
 // Top middle
-function checkoutItems(total=0){
-    cart.forEach((i)=>{total += i.quantity});
+function calcCheckoutItems(total=0){
+    cart.forEach((item)=>{total += item.quantity});
     document.querySelector('.js-return-to-home-link-').innerHTML = `${total} items`
 }
-checkoutItems()
+calcCheckoutItems()
