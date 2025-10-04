@@ -1,4 +1,4 @@
-import { calcCartQuantity, cart, removeCart } from "../data/cart.js";
+import { calcCartQuantity, cart, removeCart, updateQuantity } from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 
@@ -28,17 +28,21 @@ cart.forEach((cartItem, i) => {
             $${formatCurrency(matchingproduct.priceCents)}
             </div>
             <div class="product-quantity">
-            <span>
-                Quantity: <span class="quantity-label">${cartItem.quantity}</span>
-            </span>
-            <span class="update-quantity-link js-update-quantity-link- link-primary"
-            data-product-id=${matchingproduct.id}>
-                Update
-            </span>
-            <span class="delete-quantity-link js-delete-quantity-link- link-primary"
-            data-product-id=${matchingproduct.id}>
-                Delete
-            </span>
+                <span class="js-quantity-">
+                    Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                </span>
+                <span class="update-quantity-link js-update-quantity-link- link-primary">
+                    Update
+                </span>
+                <input class="quantity-input- js-quantity-input-">
+                <span class="save-quantity-link- js-save-quantity-link- link-primary"
+                data-product-id=${matchingproduct.id}>
+                    Save
+                </span>
+                <span class="delete-quantity-link js-delete-quantity-link- link-primary"
+                data-product-id=${matchingproduct.id}>
+                    Delete
+                </span>
             </div>
         </div>
 
@@ -110,8 +114,22 @@ updateCart()
 
 document.querySelectorAll('.js-update-quantity-link-').forEach((updateBtn)=>{
     updateBtn.addEventListener('click', ()=>{
-        const id = updateBtn.dataset.productId
-        updateBtn.innerHTML += `<input class="quantity-input-"><span class="save-quantity-link- link-primary">Save</span>`
-        console.log(id)
+        updateBtn.parentElement.parentElement.parentElement.parentElement.classList.add('is-editing-quantity')
+    });
+});
+
+document.querySelectorAll('.js-save-quantity-link-').forEach((saveBtn)=>{
+    saveBtn.addEventListener('click', ()=>{
+        saveBtn.parentElement.parentElement.parentElement.parentElement.classList.remove('is-editing-quantity')
+        const quantity = Number(saveBtn.previousElementSibling.value)
+        const id = saveBtn.dataset.productId
+
+        if (quantity <= 0 || quantity >= 1000) return alert('Error: Type a valide quantity')
+        saveBtn.parentElement.querySelector('.quantity-label').innerHTML = quantity
+        updateQuantity(id, quantity)
+        updateCart()
+    });
+    saveBtn.previousElementSibling.addEventListener('keydown', (e)=>{
+        if (e.key === 'Enter') saveBtn.dispatchEvent(new Event('click'))
     });
 });

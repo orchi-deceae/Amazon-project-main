@@ -35,3 +35,8 @@ export function calcCartQuantity(total=0){
     cart.forEach((item)=>{total += item.quantity});
     return total
 }
+
+export function updateQuantity(productId, newQuantity){
+    cart.forEach((i)=>{if (i.productId === productId) i.quantity = newQuantity});
+    saveToStorage()
+}
