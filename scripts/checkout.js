@@ -1,4 +1,4 @@
-import { calcCartQuantity, cart, removeCart, updateQuantity } from "../data/cart.js";
+import { calcCartQuantity, cart, removeCart, updatedeliveryOption, updateQuantity } from "../data/cart.js";
 import { deliveryOptions } from "../data/deliveryOptions.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
@@ -7,7 +7,7 @@ import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 
 
 let cartSummeryHTML = ''
-cart.forEach((cartItem, i) => {
+cart.forEach((cartItem) => {
     const productId = cartItem.productId
     let matchingproduct
     products.forEach((product) => {
@@ -66,13 +66,14 @@ cart.forEach((cartItem, i) => {
                 <div class="delivery-options-title">
                 Choose a delivery option:
                 </div>
-                ${deliveryOptionsHTML(i, cartItem)}
+                ${deliveryOptionsHTML(matchingproduct, cartItem)}
             </div>
         </div>
     </div>
     `
 });
-function deliveryOptionsHTML(i, cartItem, html = ''){
+
+function deliveryOptionsHTML(matchingproduct, cartItem, html = ''){
     deliveryOptions.forEach((options) => {
         const today = dayjs()
         const deliveryDate = today.add(options.deliveryDays, 'days')
@@ -80,10 +81,13 @@ function deliveryOptionsHTML(i, cartItem, html = ''){
         const priceString = options.priceCents ? formatCurrency(options.priceCents) : 'Free'
         const ischecked = options.id === cartItem.deliveryOptionsId;
 
-        html += `<div class="delivery-option">
+        html += `
+        <div class="delivery-option js-delivery-option-"
+        data-product-id="${matchingproduct.id}"
+        data-options-id="${options.id}">
             <input type="radio" ${ischecked ? 'checked' : ''}
                 class="delivery-option-input"
-                name="delivery-option-${i+1}">
+                name="delivery-option-${matchingproduct.id}">
             <div>
                 <div class="delivery-option-date">
                 ${dateString}
@@ -138,3 +142,10 @@ document.querySelectorAll('.js-save-quantity-link-').forEach((saveBtn)=>{
         if (e.key === 'Enter') saveBtn.dispatchEvent(new Event('click'))
     });
 });
+
+document.querySelectorAll('.js-delivery-option-').forEach((el)=>{
+    el.addEventListener('click', ()=>{
+        const {productId, optionsId} = el.dataset
+        updatedeliveryOption(productId, optionsId)
+    });
+})
