@@ -2,14 +2,7 @@ import { calcCartQuantity, cart, removeCart, updateQuantity } from "../data/cart
 import { deliveryOptions } from "../data/deliveryOptions.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
-import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-
-hello()
-
-const today = dayjs()
-const delivaryDate = today.add(7, 'days')
-console.log(delivaryDate.format('dddd, D MMMM'))
 
 
 
@@ -73,22 +66,22 @@ cart.forEach((cartItem, i) => {
                 <div class="delivery-options-title">
                 Choose a delivery option:
                 </div>
-                ${deliveryOptionsHTML(i)}
+                ${deliveryOptionsHTML(i, cartItem)}
             </div>
         </div>
     </div>
     `
 });
-function deliveryOptionsHTML(i, html = ''){
-    deliveryOptions.forEach((options, index) => {
+function deliveryOptionsHTML(i, cartItem, html = ''){
+    deliveryOptions.forEach((options) => {
         const today = dayjs()
         const deliveryDate = today.add(options.deliveryDays, 'days')
         const dateString = deliveryDate.format('dddd, D MMMM')
         const priceString = options.priceCents ? formatCurrency(options.priceCents) : 'Free'
-        const ischecked = !index ? 'checked' : '';
+        const ischecked = options.id === cartItem.deliveryOptionsId;
 
         html += `<div class="delivery-option">
-            <input type="radio" ${ischecked}
+            <input type="radio" ${ischecked ? 'checked' : ''}
                 class="delivery-option-input"
                 name="delivery-option-${i+1}">
             <div>
