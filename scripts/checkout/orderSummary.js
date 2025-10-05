@@ -4,6 +4,7 @@ import { getProduct } from "../../data/products.js";
 import { updateCheckoutHeader } from "../../data/cart.js";
 import { formatCurrency } from "../utils/money.js";
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 
 export function renderOrderSummary(){
@@ -93,13 +94,14 @@ export function renderOrderSummary(){
         return html
     }
     
-    // delete link on items
+    // deleteBtn
     document.querySelectorAll('.js-delete-quantity-link-').forEach((link)=>{
         link.addEventListener('click', ()=>{
             const productId = link.dataset.productId
             removeCart(productId)
             updateCheckoutHeader()
-            link.parentElement.parentElement.parentElement.parentElement.remove()
+            renderOrderSummary()
+            renderPaymentSummary()
         });
     });
     
@@ -118,21 +120,23 @@ export function renderOrderSummary(){
             const id = saveBtn.dataset.productId
     
             if (quantity <= 0 || quantity >= 1000) return alert('Error: Type a valide quantity')
-            saveBtn.parentElement.querySelector('.quantity-label').innerHTML = quantity
             updateQuantity(id, quantity)
             updateCheckoutHeader()
+            renderPaymentSummary()
+            renderOrderSummary()
         });
         saveBtn.previousElementSibling.addEventListener('keydown', (e)=>{
             if (e.key === 'Enter') saveBtn.dispatchEvent(new Event('click'))
         });
     });
     
-    // radio dail
+    // checkbox
     document.querySelectorAll('.js-delivery-option-').forEach((el)=>{
         el.addEventListener('click', ()=>{
             const {productId, optionsId} = el.dataset
             updatedeliveryOption(productId, optionsId)
             renderOrderSummary()
+            renderPaymentSummary()
         });
     })
     
