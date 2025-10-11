@@ -38,10 +38,6 @@ export function calcCartQuantity(total=0){
     return total
 }
 
-export function updateCheckoutHeader(){
-    document.querySelector('.js-return-to-home-link-').innerHTML = `${calcCartQuantity()} items`
-}
-
 export function updateQuantity(productId, newQuantity){
     cart.forEach((i)=>{if (i.productId === productId) i.quantity = newQuantity});
     saveToStorage()
