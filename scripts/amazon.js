@@ -78,7 +78,7 @@ document.querySelectorAll('.js-add-to-cart-').forEach((button) => {
     let id;
     button.addEventListener('click', () => {
         id = addPopUp(button, id)
-        addToCart(button)
+        addToCart(button.dataset.productId)
         updateCart()
     });
 });

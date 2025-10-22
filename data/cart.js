@@ -5,20 +5,24 @@ function saveToStorage(){
     localStorage.setItem('cart-exercise', JSON.stringify(cart))
 }
 
-export function addToCart(button){
-    const count = button.parentElement.querySelector('.product-quantity-container select')
-    const productId = button.dataset.productId
+export function addToCart(productId){
+    let count = 1;
     let mathchingItem;
+    document.querySelectorAll('.js-add-to-cart-').forEach((el)=>{
+        if (productId === el.dataset.productId){
+            count = el.parentElement.querySelector('.product-quantity-container select').value
+        }
+    });
     
     cart.forEach((item) => {
       if (item.productId === productId) mathchingItem = item
     });
 
     // This checks have we ever done this before
-    if (mathchingItem) mathchingItem.quantity+= Number(count.value)
+    if (mathchingItem) mathchingItem.quantity+= Number(count)
     else cart.push({
       productId, 
-      quantity: Number(count.value),
+      quantity: Number(count),
       deliveryOptionsId: '1'
     })
     saveToStorage()
