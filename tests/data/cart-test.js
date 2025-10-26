@@ -1,8 +1,11 @@
-import { addToCart, cart, loadFromStorage } from "../../data/cart.js";
+import { addToCart, cart, loadFromStorage, removeCart } from "../../data/cart.js";
 
 describe('test suit: addToCart', ()=>{
-    it('adds an existing product to the cart', ()=>{
+    beforeEach(()=>{
         spyOn(localStorage, 'setItem');// Turns off setItem
+    });
+
+    it('adds an existing product to the cart', ()=>{
         spyOn(localStorage, 'getItem').and.callFake(()=>{
             return JSON.stringify([{
                 productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
@@ -17,22 +20,58 @@ describe('test suit: addToCart', ()=>{
         expect(localStorage.setItem).toHaveBeenCalledTimes(1)
         expect(cart[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
         expect(cart[0].quantity).toEqual(2)
-
+        expect(localStorage.setItem).toHaveBeenCalledWith('cart-exercise', JSON.stringify([{
+            productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+            quantity: 2,
+            deliveryOptionsId: '1'  
+        }]))
     });
+
     it('adds a new product to the cart', ()=>{
-        spyOn(localStorage, 'setItem');// Turns off setItem
         spyOn(localStorage, 'getItem').and.callFake(()=>{
-            return JSON.stringify([])
-            // JSON needs to parse a stringify or else it will fail so you cant put just []
-            // cart = JSON.parse(//!localStorage.getItem('cart')) || []
+            return JSON.stringify([]) // localStorage.getItem() = return JSON.stringify([]), in all functions
         });
-        loadFromStorage()// This changes cart fron json array to spyOn json array that will allows be empty because setItem is already hollow
+        loadFromStorage()
          
         addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
         expect(cart.length).toEqual(1)
         expect(localStorage.setItem).toHaveBeenCalledTimes(1)
         expect(cart[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
-        expect(cart[0].quantity).toEqual(1)
-         
+        expect(cart[0].quantity).toEqual(1)      
+        expect(localStorage.setItem).toHaveBeenCalledWith('cart-exercise', JSON.stringify([{
+            productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+            quantity: 1,
+            deliveryOptionsId: '1'  
+        }]))
+    });
+
+});
+
+describe('test suit: removeFromCart', ()=>{
+    beforeEach(()=>{
+        spyOn(localStorage, 'setItem');// Turns off setItem
+        spyOn(localStorage, 'getItem').and.callFake(()=>{
+            return JSON.stringify([{
+                productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+                quantity: 1,
+                deliveryOptionsId: '1'  
+            }])
+        });
+        loadFromStorage()
+    });
+    it('remove a productId that is in the cart', ()=>{
+        removeCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
+        expect(cart.length).toEqual(0)
+        expect(localStorage.setItem).toHaveBeenCalledWith('cart-exercise', JSON.stringify([]));
+        
+    });
+    it('remove a productId that is not in the cart', ()=>{
+        removeCart('15b6fc6f-327a-4ec4-896f-486349e85a3d')
+        expect(cart.length).toEqual(1)
+        expect(localStorage.setItem).toHaveBeenCalledWith('cart-exercise', JSON.stringify([{
+            productId:"e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+            quantity:1,
+            deliveryOptionsId:"1"
+        }]));
     });
 });
