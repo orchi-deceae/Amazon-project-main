@@ -3,17 +3,10 @@ import { calcDeliveryDate, deliveryOptions, getDeliveryOption } from "../../data
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
-import { isWeekend as isSatSun } from "./isWeekend.js";
 import { renderCheckoutHeader } from "./checkoutHeader.js";
 
 
 export function renderOrderSummary() {
-    // let a = dayjs()
-    // a = a.subtract(1, 'months')
-    // console.log(a.format('dddd'))
-
-    // console.log(isSatSun(a))
-
     let cartSummeryHTML = ''
     cart.forEach((cartItem) => {
         const matchingproduct = getProduct(cartItem.productId)
@@ -22,7 +15,7 @@ export function renderOrderSummary() {
         const dateString = calcDeliveryDate(deliveryOption)
 
         cartSummeryHTML += `          
-        <div class="cart-item-container">
+        <div class="cart-item-container js-cart-item-container-${matchingproduct.id}">
             <div class="delivery-date">
             Delivery date: ${dateString}
             </div>
@@ -38,7 +31,7 @@ export function renderOrderSummary() {
                     <div class="product-price">
                     $${formatCurrency(matchingproduct.priceCents)}
                     </div>
-                    <div class="product-quantity">
+                    <div class="product-quantity js-product-quantity-${matchingproduct.id}">
                         <span class="js-quantity-">
                             Quantity: <span class="quantity-label">${cartItem.quantity}</span>
                         </span>
@@ -50,7 +43,7 @@ export function renderOrderSummary() {
                         data-product-id=${matchingproduct.id}>
                             Save
                         </span>
-                        <span class="delete-quantity-link js-delete-quantity-link- link-primary"
+                        <span class="delete-quantity-link js-delete-quantity-link- js-delete-link-${matchingproduct.id} link-primary"
                         data-product-id=${matchingproduct.id}>
                             Delete
                         </span>

@@ -1,6 +1,11 @@
 export let cart = JSON.parse(localStorage.getItem('cart-exercise')) || [
 ]
 
+export function loadFromStorage(){
+    cart = JSON.parse(localStorage.getItem('cart-exercise')) || []
+}
+
+
 function saveToStorage(){
     localStorage.setItem('cart-exercise', JSON.stringify(cart))
 }
