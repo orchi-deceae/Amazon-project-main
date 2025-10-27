@@ -1,3 +1,5 @@
+import { deliveryOptions } from "./deliveryOptions.js";
+
 export let cart = JSON.parse(localStorage.getItem('cart-exercise')) || []
 
 export function loadFromStorage(){
@@ -56,6 +58,8 @@ export function updatedeliveryOption(productId, deliveryOptionsId){
     cart.forEach((cartItem) => {
       if (cartItem.productId === productId) mathchingItem = cartItem
     });
+    if (!mathchingItem) return
+    if (Number(deliveryOptionsId)<1 || Number(deliveryOptionsId)>3) return
     mathchingItem.deliveryOptionsId = deliveryOptionsId;
     saveToStorage()
 }

@@ -70,7 +70,7 @@ export function renderOrderSummary() {
             const ischecked = deliveryOption.id === cartItem.deliveryOptionsId;
 
             html += `
-            <div class="delivery-option js-delivery-option-"
+            <div class="delivery-option js-delivery-option- js-delivery-option-${matchingproduct.id}-${deliveryOption.id}"
             data-product-id="${matchingproduct.id}"
             data-options-id="${deliveryOption.id}">
                 <input type="radio" ${ischecked ? 'checked' : ''}

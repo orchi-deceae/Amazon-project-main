@@ -1,4 +1,4 @@
-import { addToCart, cart, loadFromStorage, removeCart } from "../../data/cart.js";
+import { addToCart, cart, loadFromStorage, removeCart, updatedeliveryOption } from "../../data/cart.js";
 
 describe('test suit: addToCart', ()=>{
     beforeEach(()=>{
@@ -73,5 +73,62 @@ describe('test suit: removeFromCart', ()=>{
             quantity:1,
             deliveryOptionsId:"1"
         }]));
+    });
+});
+
+describe('test suit: updateDeliveryOption', ()=>{
+    beforeEach(()=>{
+        spyOn(localStorage, 'setItem')
+        spyOn(localStorage, 'getItem').and.callFake(()=>{
+            return JSON.stringify([{
+                productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+                quantity: 1,
+                deliveryOptionsId: '1'  
+            }])
+        });
+        loadFromStorage()
+    });
+
+    it('update the delivery option of a product in the cart', ()=>{
+        updatedeliveryOption('e43638ce-6aa0-4b85-b27f-e1d07eb678c6', '3')
+        expect(cart).toEqual([{
+            productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+            quantity: 1,
+            deliveryOptionsId: '3'  
+        }])
+        expect(localStorage.setItem).toHaveBeenCalledWith('cart-exercise', JSON.stringify([{
+            productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+            quantity: 1,
+            deliveryOptionsId: '3'  
+        }]))
+    });
+
+    it('update the delivery option of a productId that is not in the cart', ()=>{
+        updatedeliveryOption('fake id', '1')
+        
+        expect(cart).toEqual([{
+            productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+            quantity: 1,
+            deliveryOptionsId: '1'  
+        }])
+        expect(localStorage.setItem).not.toHaveBeenCalledWith('cart-exercise', JSON.stringify([{
+            productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+            quantity: 1,
+            deliveryOptionsId: '3'  
+        }]))
+    });
+
+    it('use a deliveryOptionId that does not exist', ()=>{
+        updatedeliveryOption('e43638ce-6aa0-4b85-b27f-e1d07eb678c6', '4')
+        expect(cart).toEqual([{
+            productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+            quantity: 1,
+            deliveryOptionsId: '1'
+        }])
+        expect(localStorage.setItem).not.toHaveBeenCalledWith('cart-exercise', JSON.stringify([{
+            productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6', 
+            quantity: 1,
+            deliveryOptionsId: '1'  
+        }]))
     });
 });
