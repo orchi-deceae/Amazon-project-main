@@ -1,9 +1,55 @@
+import { formatCurrency } from "../scripts/utils/money.js";
+
 export function getProduct(productId){
     let matchingproduct
     products.forEach((product) => {
         if (product.id == productId) matchingproduct = product
     });
     return matchingproduct
+}
+
+class Product {
+    id;
+    image;
+    name;
+    rating;
+    priceCents;
+
+    constructor(product_details) {
+        this.id = product_details.id;
+        this.image =  product_details.image;
+        this.name = product_details.name;
+        this.rating = product_details.rating;
+        this.priceCents = product_details.priceCents;
+    }
+
+    getStarsUrl() {
+        return `images/ratings/rating-${this.rating.stars*10}.png` 
+    }
+
+    getPrice() {
+        return `${formatCurrency(this.priceCents)}`
+    }
+
+    extraInfoHTML() {return ''}
+}
+
+class Clothing extends Product{
+    type;
+    sizeChartLink;
+    constructor(productDetails) {
+        super(productDetails)
+        this.type = "clothing";
+        this.sizeChartLink = "images/clothing-size-chart.png";
+    }
+
+    extraInfoHTML() {
+        return `
+        <a href="${this.sizeChartLink}" target="_blank">
+            Size chart
+        </a>
+        `
+    }
 }
 
 export const products = [
@@ -665,4 +711,9 @@ export const products = [
       "mens"
     ]
   }
-];
+].map((productDetails)=>{
+    if (productDetails.type == 'clothing') {
+        return new Clothing(productDetails)
+    }
+    return new Product(productDetails)
+});;
