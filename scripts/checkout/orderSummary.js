@@ -1,4 +1,4 @@
-import { Cart_Class } from "../../data/cart-class.js";
+import { cartClass } from "../../data/cart-class.js";
 import { calcDeliveryDate, deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
@@ -7,7 +7,7 @@ import { renderCheckoutHeader } from "./checkoutHeader.js";
 
 export function renderOrderSummary() {
     let cartSummeryHTML = ''
-    Cart_Class.cart.forEach((cartItem) => {
+    cartClass.cart.forEach((cartItem) => {
         const matchingproduct = getProduct(cartItem.productId)
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionsId);
 
@@ -92,7 +92,7 @@ export function renderOrderSummary() {
     document.querySelectorAll('.js-delete-quantity-link-').forEach((link) => {
         link.addEventListener('click', () => {
             const productId = link.dataset.productId
-            Cart_Class.removeCart(productId)
+            cartClass.removeCart(productId)
             renderOrderSummary()
             renderPaymentSummary()
             renderCheckoutHeader()
@@ -114,7 +114,7 @@ export function renderOrderSummary() {
             const id = saveBtn.dataset.productId
 
             if (quantity <= 0 || quantity >= 1000) return alert('Error: Type a valide quantity')
-            Cart_Class.updateQuantity(id, quantity)
+            cartClass.updateQuantity(id, quantity)
             renderPaymentSummary()
             renderOrderSummary()
             renderCheckoutHeader()
@@ -128,7 +128,7 @@ export function renderOrderSummary() {
     document.querySelectorAll('.js-delivery-option-').forEach((el) => {
         el.addEventListener('click', () => {
             const { productId, optionsId } = el.dataset
-            Cart_Class.updatedeliveryOption(productId, optionsId)
+            cartClass.updatedeliveryOption(productId, optionsId)
             renderOrderSummary()
             renderPaymentSummary()
             renderCheckoutHeader()

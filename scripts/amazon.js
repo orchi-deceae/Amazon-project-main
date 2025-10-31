@@ -1,5 +1,5 @@
 
-import { Cart_Class } from "../data/cart-class.js";
+import { cartClass } from "../data/cart-class.js";
 import { products } from "../data/products.js";
 
 let allproducts = [];
@@ -58,28 +58,28 @@ products.forEach((product) => {
         </div>
         `
 
-        allproducts += productsHTML
-    });
+    allproducts += productsHTML
+});
 document.querySelector('.products-grid-js-').innerHTML = allproducts
 
-function addPopUp(button, id){
+function addPopUp(button, id) {
     let addedPopUp = button.parentElement.querySelector('.added-to-cart').style
 
     addedPopUp.opacity = 1;
     if (addedPopUp.opacity) clearTimeout(id)
-    id = setTimeout(()=>addedPopUp.opacity = '0', 2000)
+    id = setTimeout(() => addedPopUp.opacity = '0', 2000)
     return id
 }
 
-function updateCart(){
-    document.querySelector('.cart-quantity-js-').innerHTML = Cart_Class.calcCartQuantity()
+function updateCart() {
+    document.querySelector('.cart-quantity-js-').innerHTML = cartClass.calcCartQuantity()
 }
 
 document.querySelectorAll('.js-add-to-cart-').forEach((button) => {
     let id;
     button.addEventListener('click', () => {
         id = addPopUp(button, id)
-        Cart_Class.addToCart(button.dataset.productId)
+        cartClass.addToCart(button.dataset.productId)
         updateCart()
     });
 });
