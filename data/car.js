@@ -19,19 +19,23 @@ class Car {
     go() {
         if (!this.isTrunkOpen) this.speed+=5
         if (this.speed > 200) return this.speed = 200
+        this.displayInfo()
     }
     
     brake() {
         this.speed-=5
         if (this.speed < 0) return this.speed = 0
+        this.displayInfo()
     }
 
     openTrunk() {
         if (!this.speed) this.isTrunkOpen = true
+        if (!this.speed) console.log('open')
     }
     
     closeTrunk() {
         this.isTrunkOpen = false
+        console.log('close')
     }
 }
 
@@ -43,13 +47,18 @@ class RaceCar extends Car {
     go() {
         if (!this.isTrunkOpen) this.speed+=this.acceleration
         if (this.speed > 300) return this.speed = 200
+        this.displayInfo()
     }
     brake() {
-        if (!this.isTrunkOpen) this.speed-=this.acceleration
+        this.speed-=this.acceleration
         if (this.speed < 0) return this.speed = 0
+        this.displayInfo()
     }
     openTrunk(){
-        this.isTrunkOpen = false
+        console.log('RaceCars do not have trunks')
+    }
+    closeTrunk(){
+        console.log('RaceCars do not have trunks')
     }
 }
 
@@ -75,14 +84,13 @@ const cars = [
 console.log(cars)
 
 cars.forEach((car)=>{
-    car.displayInfo()
+    car.openTrunk()
+
     car.go()
-    car.displayInfo()
     car.go()
-    car.displayInfo()
+
+    car.closeTrunk()
+
     car.go()
-    car.displayInfo()
-    car.brake()
-    car.brake()
-    car.displayInfo()
+    car.go()
 });

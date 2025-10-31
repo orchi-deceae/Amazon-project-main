@@ -1,6 +1,6 @@
 import { formatCurrency } from "../scripts/utils/money.js";
 
-class Product {
+export class Product {
     id;
     image;
     name;
@@ -26,7 +26,7 @@ class Product {
     extraInfoHTML() {return ''}
 }
 
-class Clothing extends Product{
+export class Clothing extends Product{
     type;
     sizeChartLink;
     constructor(productDetails) {
@@ -43,7 +43,7 @@ class Clothing extends Product{
         `
     }
 }
-class Appliance extends Product{
+export class Appliance extends Product{
     type;
     warrantyLink;
     instructionstLink;

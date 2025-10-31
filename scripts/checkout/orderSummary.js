@@ -1,14 +1,13 @@
-import { cart, removeCart, updatedeliveryOption, updateQuantity } from "../../data/cart.js";
+import { Cart_Class } from "../../data/cart-class.js";
 import { calcDeliveryDate, deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
 import { renderCheckoutHeader } from "./checkoutHeader.js";
 
-
 export function renderOrderSummary() {
     let cartSummeryHTML = ''
-    cart.forEach((cartItem) => {
+    Cart_Class.cart.forEach((cartItem) => {
         const matchingproduct = getProduct(cartItem.productId)
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionsId);
 
@@ -93,7 +92,7 @@ export function renderOrderSummary() {
     document.querySelectorAll('.js-delete-quantity-link-').forEach((link) => {
         link.addEventListener('click', () => {
             const productId = link.dataset.productId
-            removeCart(productId)
+            Cart_Class.removeCart(productId)
             renderOrderSummary()
             renderPaymentSummary()
             renderCheckoutHeader()
@@ -115,7 +114,7 @@ export function renderOrderSummary() {
             const id = saveBtn.dataset.productId
 
             if (quantity <= 0 || quantity >= 1000) return alert('Error: Type a valide quantity')
-            updateQuantity(id, quantity)
+            Cart_Class.updateQuantity(id, quantity)
             renderPaymentSummary()
             renderOrderSummary()
             renderCheckoutHeader()
@@ -129,7 +128,7 @@ export function renderOrderSummary() {
     document.querySelectorAll('.js-delivery-option-').forEach((el) => {
         el.addEventListener('click', () => {
             const { productId, optionsId } = el.dataset
-            updatedeliveryOption(productId, optionsId)
+            Cart_Class.updatedeliveryOption(productId, optionsId)
             renderOrderSummary()
             renderPaymentSummary()
             renderCheckoutHeader()
