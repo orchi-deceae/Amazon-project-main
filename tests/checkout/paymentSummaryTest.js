@@ -1,7 +1,10 @@
 import { cart_class } from "../../data/cart-class.js";
+import { loadProductsFetch } from "../../data/products.js";
 import { renderPaymentSummary } from "../../scripts/checkout/paymentSummary.js";
 
 describe('test suit: renderPaymentSummary', () => {
+    beforeAll(async ()=>{await loadProductsFetch()});
+
     beforeEach(() => {
         spyOn(localStorage, 'setItem')
         spyOn(localStorage, 'getItem').and.callFake(() => {

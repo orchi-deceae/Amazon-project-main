@@ -1,4 +1,5 @@
 import { cart_class } from "../../data/cart-class.js";
+import { loadProductsFetch } from "../../data/products.js";
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 
 describe('test suite: renderOrderSummary', () => {
@@ -18,6 +19,8 @@ describe('test suite: renderOrderSummary', () => {
         }])
     });
     cart_class.loadFromStorage()*/
+    beforeAll(async ()=>{await loadProductsFetch()});
+
     beforeEach(() => {
         cart_class.cart = [{
             productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
