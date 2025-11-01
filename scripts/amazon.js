@@ -1,6 +1,8 @@
 
 import { cart_class } from "../data/cart-class.js";
-import { products } from "../data/products.js";
+import { loadProductsFetch, products } from "../data/products.js";
+
+await loadProductsFetch()
 
 let allproducts = [];
 products.forEach((product) => {
