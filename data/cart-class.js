@@ -1,19 +1,19 @@
 
 
 class Cart_Class {
-    cart = JSON.parse(localStorage.getItem(this.localStorageKey)) || [];
-    localStorageKey;
+    cart;
+    #localStorageKey;
 
     constructor(localStorageKey) {
-        this.localStorageKey = localStorageKey
-        this.addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6')
+        this.#localStorageKey = localStorageKey;
+        this.loadFromStorage()
     }
 
     loadFromStorage() {
-        this.cart = JSON.parse(localStorage.getItem(this.localStorageKey)) || []
+        this.cart = JSON.parse(localStorage.getItem(this.#localStorageKey)) || []
     };
     saveToStorage() {
-        localStorage.setItem(this.localStorageKey, JSON.stringify(this.cart))
+        localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cart))
     };
 
     addToCart(productId) {
@@ -41,10 +41,10 @@ class Cart_Class {
 
     removeCart(productId) {
         let newcart = []
-        this.cartrt.forEach((cartItem) => {
+        this.cart.forEach((cartItem) => {
             if (productId !== cartItem.productId) newcart.push(cartItem)
         });
-        this.cartart = newcart
+        this.cart = newcart
         this.saveToStorage()
     };
 
@@ -69,7 +69,7 @@ class Cart_Class {
 
 }
 
-export const cartClass = new Cart_Class('cart-oop');
+export const cart_class = new Cart_Class('cart-oop');
 // const businessCart = new Cart('cart-business');
 
 // console.log(cart)

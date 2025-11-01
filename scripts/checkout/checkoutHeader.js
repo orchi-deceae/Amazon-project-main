@@ -1,6 +1,6 @@
-import { cartClass } from "../../data/cart-class.js"
+import { cart_class } from "../../data/cart-class.js"
 
-export function renderCheckoutHeader(){ 
+export function renderCheckoutHeader() {
     const html = `
         <div class="header-content">
             <div class="checkout-header-left-section">
@@ -11,7 +11,7 @@ export function renderCheckoutHeader(){
             </div>
 
             <div class="checkout-header-middle-section">
-                Checkout (<a class="return-to-home-link js-return-to-home-link-" href="amazon-exercise.html">${cartClass.calcCartQuantity()} items</a>)
+                Checkout (<a class="return-to-home-link js-return-to-home-link-" href="amazon-exercise.html">${cart_class.calcCartQuantity()} items</a>)
             </div>
 
             <div class="checkout-header-right-section">

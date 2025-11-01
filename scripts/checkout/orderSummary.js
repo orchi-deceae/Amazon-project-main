@@ -1,4 +1,4 @@
-import { cartClass } from "../../data/cart-class.js";
+import { cart_class } from "../../data/cart-class.js";
 import { calcDeliveryDate, deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
@@ -7,7 +7,7 @@ import { renderCheckoutHeader } from "./checkoutHeader.js";
 
 export function renderOrderSummary() {
     let cartSummeryHTML = ''
-    cartClass.cart.forEach((cartItem) => {
+    cart_class.cart.forEach((cartItem) => {
         const matchingproduct = getProduct(cartItem.productId)
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionsId);
 
@@ -92,7 +92,7 @@ export function renderOrderSummary() {
     document.querySelectorAll('.js-delete-quantity-link-').forEach((link) => {
         link.addEventListener('click', () => {
             const productId = link.dataset.productId
-            cartClass.removeCart(productId)
+            cart_class.removeCart(productId)
             renderOrderSummary()
             renderPaymentSummary()
             renderCheckoutHeader()
@@ -114,13 +114,13 @@ export function renderOrderSummary() {
             const id = saveBtn.dataset.productId
 
             if (quantity <= 0 || quantity >= 1000) return alert('Error: Type a valide quantity')
-            cartClass.updateQuantity(id, quantity)
+            cart_class.updateQuantity(id, quantity)
             renderPaymentSummary()
             renderOrderSummary()
             renderCheckoutHeader()
         });
         saveBtn.previousElementSibling.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') saveBtn.dispatchEvent(new Event('click'))
+            if (e.key === 'Enter') saveBtn.click()
         });
     });
 
@@ -128,7 +128,7 @@ export function renderOrderSummary() {
     document.querySelectorAll('.js-delivery-option-').forEach((el) => {
         el.addEventListener('click', () => {
             const { productId, optionsId } = el.dataset
-            cartClass.updatedeliveryOption(productId, optionsId)
+            cart_class.updatedeliveryOption(productId, optionsId)
             renderOrderSummary()
             renderPaymentSummary()
             renderCheckoutHeader()

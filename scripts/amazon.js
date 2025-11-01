@@ -1,5 +1,5 @@
 
-import { cartClass } from "../data/cart-class.js";
+import { cart_class } from "../data/cart-class.js";
 import { products } from "../data/products.js";
 
 let allproducts = [];
@@ -72,14 +72,14 @@ function addPopUp(button, id) {
 }
 
 function updateCart() {
-    document.querySelector('.cart-quantity-js-').innerHTML = cartClass.calcCartQuantity()
+    document.querySelector('.cart-quantity-js-').innerHTML = cart_class.calcCartQuantity()
 }
 
 document.querySelectorAll('.js-add-to-cart-').forEach((button) => {
     let id;
     button.addEventListener('click', () => {
         id = addPopUp(button, id)
-        cartClass.addToCart(button.dataset.productId)
+        cart_class.addToCart(button.dataset.productId)
         updateCart()
     });
 });
