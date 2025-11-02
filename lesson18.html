@@ -57,7 +57,10 @@
                 console.log(data)
             }
             catch(err) {
-                if (await err.status === 400) console.log(await err.json())
+                if (await err.status === 400) {
+                    err = await err.json() 
+                    console.log(await err.errorMessage)
+                }
                 else {console.log('Network error. Please try again later.')}
             }
         }

@@ -70,6 +70,12 @@ class Cart_Class {
 }
 
 export const cart_class = new Cart_Class('cart-oop');
+
+export async function loadCartFetch(){
+    const response = await fetch('https://supersimplebackend.dev/cart')
+    const data = await response.text()
+    console.log(data)
+}
 // const businessCart = new Cart('cart-business');
 
 // console.log(cart)
