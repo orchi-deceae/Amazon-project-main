@@ -741,9 +741,9 @@ export class Appliance extends Product{
 export let products = []
 
 export async function loadProductsFetch(){
+    try {
     const response = await fetch('https://supersimplebackend.dev/products')
     const data = await response.json()
-    try {
         products = data.map((productDetails)=>{
             if (productDetails.type == 'clothing') {
                 return new Clothing(productDetails)
@@ -754,6 +754,7 @@ export async function loadProductsFetch(){
     }
     catch(err) {
         console.log('Unexpected error, Please try again later1.\n' + err)
+        defaultBehavior()
     }
 }
 
@@ -766,7 +767,15 @@ export function getProduct(productId){
     return matchingproduct
 }
 
-/**const products = [
+
+function defaultBehavior(){
+    products = backup.map((productDetails)=>{
+        if (productDetails.type == 'clothing') return new Clothing(productDetails)
+        return new Product(productDetails)
+    });
+}
+
+const backup = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
@@ -1428,4 +1437,4 @@ export function getProduct(productId){
       "mens"
     ]
   }
-] */
+]

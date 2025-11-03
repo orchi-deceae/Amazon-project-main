@@ -72,9 +72,14 @@ class Cart_Class {
 export const cart_class = new Cart_Class('cart-oop');
 
 export async function loadCartFetch(){
+    try {
     const response = await fetch('https://supersimplebackend.dev/cart')
     const data = await response.text()
     console.log(data)
+    }
+    catch(er){
+        console.log('Network issue. Please try again later.\n' + er)
+    }
 }
 // const businessCart = new Cart('cart-business');
 
