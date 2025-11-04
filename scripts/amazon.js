@@ -1,5 +1,5 @@
 
-import { cart_class } from "../data/cart-class.js";
+import { cart_class, updateCart } from "../data/cart-class.js";
 import { loadProductsFetch, products } from "../data/products.js";
 
 await loadProductsFetch()
@@ -71,10 +71,6 @@ function addPopUp(button, id) {
     if (addedPopUp.opacity) clearTimeout(id)
     id = setTimeout(() => addedPopUp.opacity = '0', 2000)
     return id
-}
-
-function updateCart() {
-    document.querySelector('.cart-quantity-js-').innerHTML = cart_class.calcCartQuantity()
 }
 
 document.querySelectorAll('.js-add-to-cart-').forEach((button) => {

@@ -1,6 +1,6 @@
 import { cart_class } from "../../data/cart-class.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
-import { loadOrderFetch } from "../../data/orders.js";
+import { addOrder } from "../../data/orders.js";
 import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 
@@ -55,8 +55,8 @@ export function renderPaymentSummary() {
           </button>
     `
     document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML
-    document.querySelector('.js-place-order-').addEventListener('click',async ()=>{
-        await loadOrderFetch()
+    document.querySelector('.js-place-order-').addEventListener('click', async () => {
+        await addOrder()
         window.location.href = '/orders-exercise.html'
     });
 }

@@ -81,6 +81,10 @@ export async function loadCartFetch(){
         console.log('Network issue. Please try again later.\n' + er)
     }
 }
+
+export function updateCart() {
+    document.querySelector('.cart-quantity-js-').innerHTML = cart_class.calcCartQuantity()
+}
 // const businessCart = new Cart('cart-business');
 
 // console.log(cart)

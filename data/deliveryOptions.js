@@ -38,7 +38,7 @@ export function calcDeliveryDate(deliveryOption){
         const dateString = date.format('dddd, D MMMM')
     }
     catch(er) {
-        return 'Error'
+        return 'Date error'
     }
     return dateString
 }

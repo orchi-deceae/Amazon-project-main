@@ -1,36 +1,33 @@
 import { cart_class } from "./cart-class.js"
 
-const orders = JSON.parse(localStorage.getItem('orders')) || []
+export let orders = JSON.parse(localStorage.getItem('orders')) || []
 
-export function saveOrderToStorage(){
+export function loadOrder(){
+    orders = JSON.parse(localStorage.getItem('orders')) || []
+}
+
+export function saveOrderToStorage() {
     localStorage.setItem('orders', JSON.stringify(orders))
 }
 
-export async function loadOrderFetch(){
+export async function addOrder() {
     try {
         const response = await fetch('https://supersimplebackend.dev/orders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({cart: cart_class.cart})
+            body: JSON.stringify({ cart: cart_class.cart })
         })
         const order = await response.json()
-        addOrder(order)
+        orders.push(order)
     }
-    catch(err) {
+    catch (err) {
         console.log('Unexpected error, Try again later.\n' + err)
-        defaultBehavior()
+        orders = backup // if (!orders) 
     }
-}
-
-function addOrder(order){
-    orders.push(order)
+    localStorage.setItem('cart-oop', JSON.stringify([]))
     saveOrderToStorage()
-}
-
-function defaultBehavior(){
-    addOrder(backup)
 }
 
 const backup = [
