@@ -14,6 +14,9 @@ async function loadPage(){
     }
     catch(err) {
         console.log('Unexpected error, Please try again later.\n' + err)
+        renderOrderSummary()
+        renderPaymentSummary()
+        renderCheckoutHeader()
     }
 }
 loadPage()
