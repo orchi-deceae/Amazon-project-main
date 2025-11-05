@@ -1,4 +1,4 @@
-import { updateCart } from "../data/cart-class.js";
+import { headerOperations } from "../data/cart-class.js";
 import { orders } from "../data/orders.js";
 import { getProduct, loadProductsFetch } from "../data/products.js";
 await loadProductsFetch()
@@ -63,6 +63,6 @@ function loadPage(){
     
     `
     document.querySelector('.main').innerHTML = html
-    updateCart()
+    headerOperations()
 }
 loadPage()

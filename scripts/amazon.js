@@ -1,7 +1,6 @@
 
-import { cart_class, updateCart } from "../data/cart-class.js";
+import { cart_class, headerOperations } from "../data/cart-class.js";
 import { loadProductsFetch, products } from "../data/products.js";
-
 await loadProductsFetch()
 
 let allproducts = [];
@@ -78,8 +77,8 @@ document.querySelectorAll('.js-add-to-cart-').forEach((button) => {
     button.addEventListener('click', () => {
         id = addPopUp(button, id)
         cart_class.addToCart(button.dataset.productId)
-        updateCart()
+        headerOperations()
     });
 });
 
-updateCart()
+headerOperations()

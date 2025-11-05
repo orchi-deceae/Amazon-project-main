@@ -1,4 +1,4 @@
-import { updateCart } from "../data/cart-class.js";
+import { headerOperations } from "../data/cart-class.js";
 import { orders, saveOrderToStorage } from "../data/orders.js";
 import { getProduct, loadProductsFetch} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
@@ -88,6 +88,6 @@ function loadPage(){
             loadPage()
         });
     });
-    updateCart()
+    headerOperations()
 }
 loadPage()

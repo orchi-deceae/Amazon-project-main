@@ -71,19 +71,32 @@ class Cart_Class {
 
 export const cart_class = new Cart_Class('cart-oop');
 
-export async function loadCartFetch(){
+export async function loadCartFetch() {
     try {
-    const response = await fetch('https://supersimplebackend.dev/cart')
-    const data = await response.text()
-    console.log(data)
+        const response = await fetch('https://supersimplebackend.dev/cart')
+        const data = await response.text()
+        console.log(data)
     }
-    catch(er){
+    catch (er) {
         console.log('Network issue. Please try again later.\n' + er)
     }
 }
 
-export function updateCart() {
+export function headerOperations() {
     document.querySelector('.cart-quantity-js-').innerHTML = cart_class.calcCartQuantity()
+    searchListeners()
+}
+
+function searchListeners() {
+    const searchBar = document.querySelector('.-js-search-bar')
+    const searchButton = document.querySelector('.-js-search-button')
+    searchBar.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter') searchButton.click()
+    });
+    searchButton.addEventListener('click', () => {
+        window.location.href = `/amazon-exercise.html?search=${searchBar.value}`
+    });
+
 }
 // const businessCart = new Cart('cart-business');
 
