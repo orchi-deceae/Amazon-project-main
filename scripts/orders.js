@@ -64,7 +64,7 @@ function loadPage(){
                 </div>
 
                 <div class="product-actions">
-                    <a href="tracking-exercise.html?orderId=${order.id}&productId=${orderItem.productId}.html">
+                    <a href="tracking-exercise.html?orderId=${order.id}&productId=${orderItem.productId}">
                         <button class="track-package-button button-secondary">
                             Track package
                         </button>
