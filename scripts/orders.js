@@ -2,6 +2,7 @@ import { headerOperations } from "../data/cart-class.js";
 import { orders, saveOrderToStorage } from "../data/orders.js";
 import { getProduct, loadProductsFetch} from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
+import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 await loadProductsFetch()
 
 
@@ -9,6 +10,8 @@ console.log(orders)
 function loadPage(){
     let html = '';
     orders.forEach(order => {
+        order.orderTime = dayjs(order.orderTime)
+        order.orderTime = order.orderTime.format('dddd D MMMM, YYYY')
         html += `
             <div class="order-container">
 
@@ -41,6 +44,8 @@ function loadPage(){
         let orderItems = order.products
         orderItems.forEach((orderItem)=>{
             const product = getProduct(orderItem.productId)
+            orderItem.estimatedDeliveryTime = dayjs(orderItem.estimatedDeliveryTime)
+            orderItem.estimatedDeliveryTime = orderItem.estimatedDeliveryTime.format('dddd D MMMM, YYYY')
             html += `
                 <div class="product-image-container">
                     <img src="${product.image}">
