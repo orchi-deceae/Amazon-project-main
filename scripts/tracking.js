@@ -4,7 +4,7 @@ import { getProduct, loadProductsFetch } from "../data/products.js";
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 await loadProductsFetch()
 
-function loadPage(){
+function loadPage() {
     const url = new URL(window.location.href);
     const orderId = url.searchParams.get('orderId')
     const productId = url.searchParams.get('productId')
@@ -17,10 +17,9 @@ function loadPage(){
     let today;
     let orderTime;
     let deliveryTime;
-    console.log(orders)
     orders.forEach(order => {
-        if (orderId === order.id) order.products.forEach((orderItem)=>{
-            if (productId === orderItem.productId){
+        if (orderId === order.id) order.products.forEach((orderItem) => {
+            if (productId === orderItem.productId) {
                 name = product.name
                 image = product.image
                 quantity = orderItem.quantity
@@ -28,13 +27,12 @@ function loadPage(){
                 date = date.format('dddd D MMMM, YYYY')
 
                 today = dayjs()
-                orderTime =  dayjs(order.orderTime)
+                orderTime = dayjs(order.orderTime)
                 deliveryTime = dayjs(orderItem.estimatedDeliveryTime)
             }
         });
     });
-    const percentProgress = ((today - orderTime)/(deliveryTime - orderTime)) * 100
-    console.log(percentProgress)
+    const percentProgress = ((today - orderTime) / (deliveryTime - orderTime)) * 100
     const html = `
     
         <div class="order-tracking">
@@ -58,15 +56,15 @@ function loadPage(){
 
             <div class="progress-labels-container">
                 <div class="progress-label
-                ${percentProgress<50?'current-status':''}">
+                ${percentProgress < 50 ? 'current-status' : ''}">
                     Preparing
                 </div>
                 <div class="progress-label
-                ${percentProgress>=50 && percentProgress<100?'current-status':''}">
+                ${percentProgress >= 50 && percentProgress < 100 ? 'current-status' : ''}">
                     Shipped
                 </div>
                 <div class="progress-label
-                ${percentProgress === 100?'current-status':''}">
+                ${percentProgress === 100 ? 'current-status' : ''}">
                     Delivered
                 </div>
             </div>

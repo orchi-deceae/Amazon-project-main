@@ -6,7 +6,6 @@ import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 await loadProductsFetch()
 
 
-console.log(orders)
 function loadPage(){
     let html = '';
     orders.forEach(order => {

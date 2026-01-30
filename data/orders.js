@@ -2,7 +2,7 @@ import { cart_class } from "./cart-class.js"
 
 export let orders = JSON.parse(localStorage.getItem('orders')) || []
 
-export function loadOrder(){
+export function loadOrder() {
     orders = JSON.parse(localStorage.getItem('orders')) || []
 }
 
@@ -24,7 +24,7 @@ export async function addOrder() {
     }
     catch (err) {
         console.log('Unexpected error, Try again later.\n' + err)
-        orders = backup // if (!orders) 
+        if (!orders) orders = backup
     }
     localStorage.setItem('cart-oop', JSON.stringify([]))
     saveOrderToStorage()
